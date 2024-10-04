@@ -6,11 +6,7 @@ DELAY=${args[-2]}
 OPTION=${args[-1]}
 unset args[-2]
 unset args[-1]
-
 IMAGE_DIR=${args[*]}
-echo "Image directory: $args"
-echo "Delay: $DELAY"
-echo "Option: $OPTION"
 
 restore_kitty_config() {
     if [ -n "$KITTY_WINDOW_ID" ]; then
@@ -23,8 +19,7 @@ if [ -n "$KITTY_WINDOW_ID" ]; then
     kitten @ load-config -o window_padding_width=0
 fi
 
-if OPTION=="-r"
-then
+if [ "$OPTION" = "-r" ]; then
   chafa $(ls $IMAGE_DIR | shuf) --clear --scale max --align mid,mid -d $DELAY &
 else
   chafa $IMAGE_DIR --clear --scale max --align mid,mid -d $DELAY &
