@@ -8,7 +8,7 @@
 
 ## Overview
 
-**Bangshow** is a command-line tool designed to display images of Bang Dream bands in a terminal. It provides a simple way to visualize your favorite characters and enhance your terminal experience.
+**Bangshow** is a command-line tool designed to display images of Bang Dream bands in a terminal. It provides a simple way to visualize your favorite characters and enhance your terminal experience.The images are all sourced from in-game card art and downloaded using a script from [Bestdori](https://bestdori.com/).
 
 ## Features
 
