@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Check if two parameters are provided
+if [ "$#" -ne 2 ]; then
+  echo "Usage: $0 /path/to/your/images delay_in_seconds"
+  exit 1
+fi
+
+# Use the provided folder path and delay time
+IMAGE_DIR="$1"
+DELAY="$2"
+
+chafa $IMAGE_DIR --clear --scale max --align mid,mid -d $DELAY
