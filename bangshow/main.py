@@ -27,23 +27,29 @@ def update_images(name):
     band_id, char_id = get_id(name)
     get_pics(band_id, char_id)
 
-def display_images(name, delay):
+def display_images(names, delay, randomize):
     # Logic to display images for the specified band or character
-    print(f"Displaying images for {name}...")
-    band_id, char_id = get_id(name)
+    print(f"Displaying images for {names}...")
     char_ids = []
-    if char_id:
-        char_ids.append(char_id)
-    elif band_id:
-        char_ids = list(range(band_id*5-4, band_id*5+1))
-    
+    for name in names:
+        band_id, char_id = get_id(name)
+        if char_id:
+            char_ids.append(char_id)
+        elif band_id:
+            char_ids = list(range(band_id*5-4, band_id*5+1))
+    args = [SLIDES_PLAYER_SC]
     for char_id in char_ids:
-        args = [SLIDES_PLAYER_SC, f"{pics_path}/res{str(char_id).zfill(3)}*/*.png", str(delay)]
-        try:
-            subprocess.run(args)
-        except KeyboardInterrupt:
-            print("\nDisplay stopped.")
-            exit(0)
+        args.append(f"{pics_path}/res{str(char_id).zfill(3)}*/*.png")
+    args.append(str(delay))
+    if randomize:
+        args.append("-r")
+    else:
+        args.append("-i")
+    try:
+        subprocess.run(args)
+    except KeyboardInterrupt:
+        print("\nDisplay stopped.")
+        exit(0)
 
 def main():
     # Create the argument parser
@@ -54,6 +60,7 @@ def main():
     parser.add_argument('-s', action='store_true', help='Display images')
     parser.add_argument('-d', type=float, default=1, help='Specify delay (in seconds) between image displays')
     parser.add_argument('-l', action='store_true', help='Loop playback of images')
+    parser.add_argument('-r', action='store_true', help='Randomize image order')
 
     # Allow multiple names to be passed (nargs='+')
     parser.add_argument('name', nargs='+', help='Band or character name(s)')
@@ -69,8 +76,6 @@ def main():
         args.s = True
     if args.s:
         while True:
-            for name in args.name:
-                display_images(name, args.d)
+            display_images(args.name, args.d, args.r)
             if not args.l:
                 break
-

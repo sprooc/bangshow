@@ -56,6 +56,7 @@ pip install .
 
 # Create a symlink to make bangshow accessible from anywhere
 echo "Creating a symlink for bangshow in /usr/bin"
+sudo rm -f "/usr/bin/bangshow"
 sudo ln -s "$BANGSHOW_DIR/venv/bin/bangshow" "/usr/bin/bangshow"
 
 

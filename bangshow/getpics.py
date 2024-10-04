@@ -74,5 +74,3 @@ def get_pics(band_id=None, char_id=None):
         else:
             for i in range(1, 41):
                 get_pics_char(driver, i)
-
-

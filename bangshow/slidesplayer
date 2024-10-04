@@ -1,13 +1,33 @@
 #!/bin/bash
 
-# Check if two parameters are provided
-if [ "$#" -ne 2 ]; then
-  echo "Usage: $0 /path/to/your/images delay_in_seconds"
-  exit 1
+args=("$@")
+# Use the provided folder path and delay time
+DELAY=${args[-2]}
+OPTION=${args[-1]}
+unset args[-2]
+unset args[-1]
+
+IMAGE_DIR=${args[*]}
+echo "Image directory: $args"
+echo "Delay: $DELAY"
+echo "Option: $OPTION"
+
+restore_kitty_config() {
+    if [ -n "$KITTY_WINDOW_ID" ]; then
+        kitten @ load-config -o window_padding_width=25
+    fi
+}
+trap restore_kitty_config EXIT
+
+if [ -n "$KITTY_WINDOW_ID" ]; then
+    kitten @ load-config -o window_padding_width=0
 fi
 
-# Use the provided folder path and delay time
-IMAGE_DIR="$1"
-DELAY="$2"
+if OPTION=="-r"
+then
+  chafa $(ls $IMAGE_DIR | shuf) --clear --scale max --align mid,mid -d $DELAY &
+else
+  chafa $IMAGE_DIR --clear --scale max --align mid,mid -d $DELAY &
+fi
 
-chafa $IMAGE_DIR --clear --scale max --align mid,mid -d $DELAY
+wait

@@ -6,11 +6,11 @@ setup(
     packages=find_packages(),
     entry_points={
         'console_scripts': [
-            'bangshow = bangshow.main:main',  # 这里的 main 是你的主函数
+            'bangshow = bangshow.main:main',
         ],
     },
     package_data={
-        'bangshow': ['slidesplayer'],  # 包含脚本
+        'bangshow': ['slidesplayer'],
     },
     install_requires=[
         'requests',
